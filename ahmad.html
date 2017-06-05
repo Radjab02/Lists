@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>C:\Users\Raj\Desktop\ahmad.cpp</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="generator" content="Code::Blocks Exporter plugin" />
+<style type="text/css">
+<!--
+body { color: #000000; background-color: #FFFFFF; }
+.style11 { color: #000000; background-color: #FFFFFF; }
+.style64 { color: #C8C8C8; }
+.style72 { color: #C8C8C8; }
+.style75 { color: #C8C8C8; }
+.style1 { color: #A0A0A0; }
+.style23 { color: #A0A0A0; }
+.style65 { color: #A0A0A0; }
+.style87 { color: #A0A0A0; }
+.style2 { color: #FF8000; }
+.style66 { color: #FF8000; }
+.style3 { color: #8080FF; font-weight: bold; }
+.style24 { color: #8080FF; font-weight: bold; }
+.style67 { color: #8080FF; font-weight: bold; }
+.style88 { color: #8080FF; font-weight: bold; }
+.style15 { color: #8080FF; font-weight: bold; }
+.style79 { color: #8080FF; font-weight: bold; }
+.style17 { color: #008080; }
+.style81 { color: #008080; }
+.style18 { color: #800000; }
+.style82 { color: #800000; }
+.style4 { color: #F000F0; }
+.style68 { color: #F0C8F0; }
+.style5 { color: #0000A0; font-weight: bold; }
+.style69 { color: #8787C8; font-weight: bold; }
+.style16 { color: #00A000; font-weight: bold; }
+.style80 { color: #9AC89A; font-weight: bold; }
+.style19 { color: #BE00BE; font-weight: bold; }
+.style83 { color: #BE89BE; font-weight: bold; }
+.style6 { color: #0000FF; }
+.style12 { color: #0000FF; }
+.style70 { color: #BEBEFF; }
+.style76 { color: #BEBEFF; }
+.style7 { color: #E0A000; }
+.style71 { color: #E0CE9F; }
+.style8 { color: #000000; }
+.style9 { color: #00A000; }
+.style73 { color: #84A084; }
+.style10 { color: #FF0000; }
+.style74 { color: #FFC8C8; }
+.style34 { color: #000000; background-color: #80FFFF; font-weight: bold; }
+.style35 { color: #FFFFFF; background-color: #FF0000; font-weight: bold; }
+.style50 { color: #404080; font-style: italic; }
+.style114 { color: #8585AC; font-style: italic; }
+--></style></head>
+<body>
+<pre>
+<code><span style="font: 10pt Courier New;"><span class="style9">#include &lt;iostream&gt;
+#include &lt;cstdlib&gt;
+#include &lt;ctime&gt;
+#include &lt;fstream&gt;
+#include "timer.h"
+</span><span class="style5">using namespace </span><span class="style16">std</span><span class="style10">;
+
+</span><span class="style2">//create node to make to linked-list array
+</span><span class="style5">typedef struct </span><span class="style11">Node</span><span class="style10">* </span><span class="style11">ListNode</span><span class="style10">;
+    </span><span class="style5">struct </span><span class="style11">Node</span><span class="style10">{
+    </span><span class="style5">int </span><span class="style11">data</span><span class="style10">;
+    </span><span class="style11">ListNode next</span><span class="style10">;
+    };
+</span><span class="style2">//this function make new linked-list
+//when list is already sorted , reset the list
+</span><span class="style5">void </span><span class="style11">createList</span><span class="style10">(</span><span class="style11">ListNode </span><span class="style10">*</span><span class="style11">head</span><span class="style10">,</span><span class="style5">int </span><span class="style11">size1</span><span class="style10">,</span><span class="style5">bool </span><span class="style11">reset</span><span class="style10">){
+</span><span class="style5">if</span><span class="style10">(</span><span class="style11">reset</span><span class="style10">){
+</span><span class="style5">if</span><span class="style10">(*</span><span class="style11">head</span><span class="style10">!=</span><span class="style11">NULL</span><span class="style10">){
+</span><span class="style2">//delete the old list
+</span><span class="style5">while</span><span class="style10">(*</span><span class="style11">head</span><span class="style10">!=</span><span class="style11">NULL</span><span class="style10">){
+     </span><span class="style11">Node</span><span class="style10">* </span><span class="style11">temp </span><span class="style10">=</span><span class="style5">new </span><span class="style11">Node</span><span class="style10">();
+    </span><span class="style11">temp</span><span class="style10">=*</span><span class="style11">head</span><span class="style10">;
+    *</span><span class="style11">head</span><span class="style10">=</span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+    </span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">=</span><span class="style11">NULL</span><span class="style10">;
+    </span><span class="style5">delete </span><span class="style11">temp</span><span class="style10">;
+    }
+*</span><span class="style11">head</span><span class="style10">=</span><span class="style11">NULL</span><span class="style10">;
+}
+</span><span class="style2">//creates a new list
+    </span><span class="style5">for</span><span class="style10">(</span><span class="style5">int </span><span class="style11">i</span><span class="style10">=</span><span class="style4">0</span><span class="style10">;</span><span class="style11">i</span><span class="style10">&lt;</span><span class="style11">size1</span><span class="style10">;</span><span class="style11">i</span><span class="style10">++){
+    </span><span class="style11">Node</span><span class="style10">* </span><span class="style11">temp </span><span class="style10">=</span><span class="style5">new </span><span class="style11">Node</span><span class="style10">();
+    </span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">= (</span><span class="style11">rand</span><span class="style10">()%(</span><span class="style11">size1</span><span class="style10">*</span><span class="style4">7</span><span class="style10">))+</span><span class="style4">1</span><span class="style10">;</span><span class="style2">//  generates random numbers
+    </span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">=*</span><span class="style11">head</span><span class="style10">;
+    *</span><span class="style11">head</span><span class="style10">=</span><span class="style11">temp</span><span class="style10">;
+    }
+ }
+}
+</span><span class="style2">//to display the linked-list
+</span><span class="style5">void </span><span class="style11">show</span><span class="style10">(</span><span class="style11">ListNode temp</span><span class="style10">){
+    </span><span class="style5">int </span><span class="style11">counter</span><span class="style10">=</span><span class="style4">0</span><span class="style10">;
+  </span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">" list is : \n"</span><span class="style10">;
+    </span><span class="style5">while</span><span class="style10">(</span><span class="style11">temp </span><span class="style10">!= </span><span class="style11">NULL</span><span class="style10">){
+        </span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">"  "</span><span class="style10">&lt;&lt;</span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">;
+        </span><span class="style11">temp</span><span class="style10">=</span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+        </span><span class="style11">counter</span><span class="style10">++;
+        </span><span class="style5">if</span><span class="style10">(</span><span class="style11">counter</span><span class="style10">==</span><span class="style4">10</span><span class="style10">){</span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style16">endl</span><span class="style10">;</span><span class="style11">counter</span><span class="style10">=</span><span class="style4">0</span><span class="style10">;}
+    }
+    </span><span class="style16">endl</span><span class="style10">(</span><span class="style16">cout</span><span class="style10">);
+    </span><span class="style16">endl</span><span class="style10">(</span><span class="style16">cout</span><span class="style10">);
+}
+
+</span><span class="style2">//structure that contains all Sorting functions.
+</span><span class="style5">struct </span><span class="style11">linked_list </span><span class="style10">{
+</span><span class="style11">ListNode head </span><span class="style10">;
+</span><span class="style5">int </span><span class="style11">size2 </span><span class="style10">;
+</span><span class="style5">bool </span><span class="style11">sorted</span><span class="style10">;
+</span><span class="style2">//constructor
+</span><span class="style11">linked_list</span><span class="style10">(</span><span class="style5">int </span><span class="style11">size1</span><span class="style10">)
+{      </span><span class="style11">size2</span><span class="style10">=</span><span class="style11">size1 </span><span class="style10">;
+       </span><span class="style11">sorted</span><span class="style10">=</span><span class="style5">false</span><span class="style10">;
+       </span><span class="style11">head </span><span class="style10">= </span><span class="style11">NULL </span><span class="style10">;
+
+    </span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">head</span><span class="style10">,</span><span class="style11">size1</span><span class="style10">,</span><span class="style5">true</span><span class="style10">);
+}
+</span><span class="style2">// selection Algorithm that returns the time.
+</span><span class="style5">double </span><span class="style11">selection_Sort_Algorithm</span><span class="style10">(){
+</span><span class="style11">ListNode start </span><span class="style10">;
+</span><span class="style11">ListNode smallest </span><span class="style10">;
+   </span><span class="style11">ListNode temp </span><span class="style10">;
+    </span><span class="style11">temp</span><span class="style10">=</span><span class="style11">head</span><span class="style10">;
+    </span><span class="style5">int </span><span class="style11">temp1</span><span class="style10">;
+</span><span class="style11">TICK</span><span class="style10">();</span><span class="style2">//start timer.
+</span><span class="style5">while</span><span class="style10">(</span><span class="style11">temp</span><span class="style10">!=</span><span class="style11">NULL</span><span class="style10">){
+</span><span class="style11">start</span><span class="style10">=</span><span class="style11">temp</span><span class="style10">;
+</span><span class="style11">smallest</span><span class="style10">=</span><span class="style11">temp</span><span class="style10">;
+</span><span class="style2">//find the smallest number in range of start to null
+</span><span class="style5">while</span><span class="style10">(</span><span class="style11">start </span><span class="style10">!= </span><span class="style11">NULL</span><span class="style10">){
+    </span><span class="style5">if</span><span class="style10">(</span><span class="style11">start</span><span class="style10">-&gt;</span><span class="style11">data </span><span class="style10">&lt; </span><span class="style11">smallest</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">)
+      </span><span class="style11">smallest</span><span class="style10">=</span><span class="style11">start</span><span class="style10">;
+    </span><span class="style11">start</span><span class="style10">=</span><span class="style11">start</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+}
+</span><span class="style2">//swap temp with smallest and display only if the size 20
+</span><span class="style5">if</span><span class="style10">(</span><span class="style11">size2</span><span class="style10">==</span><span class="style4">20</span><span class="style10">){</span><span class="style16">cout </span><span class="style10">&lt;&lt; </span><span class="style6">"Swapped " </span><span class="style10">&lt;&lt; </span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">data  </span><span class="style10">&lt;&lt; </span><span class="style6">" with " </span><span class="style10">&lt;&lt; </span><span class="style11">smallest</span><span class="style10">-&gt;</span><span class="style11">data </span><span class="style10">&lt;&lt; </span><span class="style6">" ---&gt;"</span><span class="style10">;</span><span class="style11">show</span><span class="style10">(</span><span class="style11">head</span><span class="style10">);}
+ </span><span class="style11">temp1</span><span class="style10">=</span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">;
+ </span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">=</span><span class="style11">smallest</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">;
+ </span><span class="style11">smallest</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">=</span><span class="style11">temp1</span><span class="style10">;
+ </span><span class="style11">temp</span><span class="style10">=</span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+}</span><span class="style11">TOCK</span><span class="style10">();</span><span class="style2">//stop timer
+</span><span class="style11">sorted</span><span class="style10">=</span><span class="style5">true</span><span class="style10">;
+</span><span class="style5">return </span><span class="style11">DURATION</span><span class="style10">();
+}
+</span><span class="style2">// Bubble Algorithm that returns the time.
+</span><span class="style5">double </span><span class="style11">bubble_Sort_Algorithm</span><span class="style10">(){
+</span><span class="style11">ListNode second </span><span class="style10">;
+</span><span class="style11">ListNode first </span><span class="style10">;
+    </span><span class="style11">ListNode temp </span><span class="style10">;
+    </span><span class="style11">temp</span><span class="style10">=</span><span class="style11">head</span><span class="style10">;
+    </span><span class="style11">first</span><span class="style10">=</span><span class="style11">head</span><span class="style10">;
+    </span><span class="style11">second</span><span class="style10">=</span><span class="style11">head</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+    </span><span class="style5">int </span><span class="style11">temp1</span><span class="style10">,</span><span class="style11">counter</span><span class="style10">,</span><span class="style11">counter2</span><span class="style10">=</span><span class="style4">0</span><span class="style10">;
+</span><span class="style11">TICK</span><span class="style10">(); </span><span class="style2">//start timer.
+   </span><span class="style5">while</span><span class="style10">(</span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">next </span><span class="style10">!= </span><span class="style11">NULL</span><span class="style10">){
+        </span><span class="style11">counter</span><span class="style10">=</span><span class="style4">0</span><span class="style10">;</span><span class="style2">//count if there is swap in the current phase
+        </span><span class="style11">counter2</span><span class="style10">++;</span><span class="style2">//keep count of the number of phase
+        </span><span class="style5">if</span><span class="style10">(</span><span class="style11">size2</span><span class="style10">==</span><span class="style4">20</span><span class="style10">)</span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">"\nPhase "</span><span class="style10">&lt;&lt;</span><span class="style11">counter2</span><span class="style10">&lt;&lt;</span><span class="style16">endl</span><span class="style10">&lt;&lt;</span><span class="style16">endl</span><span class="style10">;
+        </span><span class="style2">//go though the list and swap elements which are next to each other
+        </span><span class="style5">while</span><span class="style10">(</span><span class="style11">first</span><span class="style10">-&gt;</span><span class="style11">next </span><span class="style10">!= </span><span class="style11">NULL</span><span class="style10">){
+       </span><span class="style5">if</span><span class="style10">(</span><span class="style11">first</span><span class="style10">-&gt;</span><span class="style11">data </span><span class="style10">&gt; </span><span class="style11">second</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">){
+            </span><span class="style11">temp1</span><span class="style10">=</span><span class="style11">first</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">;
+            </span><span class="style11">first</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">=</span><span class="style11">second</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">;
+            </span><span class="style11">second</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">=</span><span class="style11">temp1</span><span class="style10">;
+            </span><span class="style11">counter</span><span class="style10">++;
+            </span><span class="style2">//if size is 20 display
+          </span><span class="style5">if</span><span class="style10">(</span><span class="style11">size2</span><span class="style10">==</span><span class="style4">20</span><span class="style10">){</span><span class="style16">cout</span><span class="style10">&lt;&lt; </span><span class="style6">"Swapped "</span><span class="style10">&lt;&lt;</span><span class="style11">first</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">&lt;&lt;</span><span class="style6">" with " </span><span class="style10">&lt;&lt;</span><span class="style11">second</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">&lt;&lt;</span><span class="style6">" ---&gt;"</span><span class="style10">; </span><span class="style11">show</span><span class="style10">(</span><span class="style11">head</span><span class="style10">);}
+            }
+        </span><span class="style11">first</span><span class="style10">=</span><span class="style11">first</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+        </span><span class="style11">second</span><span class="style10">=</span><span class="style11">second</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+        }
+        </span><span class="style2">//when the list is sorted break the loop
+        </span><span class="style5">if</span><span class="style10">(</span><span class="style11">counter</span><span class="style10">==</span><span class="style4">0</span><span class="style10">)</span><span class="style5">break</span><span class="style10">;
+            </span><span class="style11">temp</span><span class="style10">=</span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+            </span><span class="style11">first</span><span class="style10">=</span><span class="style11">head</span><span class="style10">;
+            </span><span class="style11">second</span><span class="style10">=</span><span class="style11">head</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+    }
+</span><span class="style11">TOCK</span><span class="style10">();</span><span class="style2">// stop the time.
+</span><span class="style11">sorted</span><span class="style10">=</span><span class="style5">true</span><span class="style10">;
+</span><span class="style5">return </span><span class="style11">DURATION</span><span class="style10">();
+ }
+</span><span class="style2">// insertion Algorithm that returns the time.
+</span><span class="style5">double </span><span class="style11">insertion_Sort_Algorithm</span><span class="style10">(){
+    </span><span class="style11">ListNode temp </span><span class="style10">= </span><span class="style11">head</span><span class="style10">;
+    </span><span class="style11">ListNode curr </span><span class="style10">= </span><span class="style11">head</span><span class="style10">;
+    </span><span class="style11">temp</span><span class="style10">=</span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+    </span><span class="style11">TICK</span><span class="style10">();</span><span class="style2">// start the time.
+//loop to check all items in the array
+    </span><span class="style5">while </span><span class="style10">(</span><span class="style11">temp </span><span class="style10">!= </span><span class="style11">NULL</span><span class="style10">){
+    </span><span class="style11">curr</span><span class="style10">= </span><span class="style11">head</span><span class="style10">;
+</span><span class="style2">//insert the item in the right place
+    </span><span class="style5">while </span><span class="style10">(</span><span class="style11">curr </span><span class="style10">!= </span><span class="style11">temp</span><span class="style10">){
+    </span><span class="style5">if </span><span class="style10">(</span><span class="style11">curr</span><span class="style10">-&gt;</span><span class="style11">data </span><span class="style10">&gt; </span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">){
+            </span><span class="style5">int </span><span class="style11">tempVariable </span><span class="style10">= </span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">;
+            </span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">=</span><span class="style11">curr</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">;
+            </span><span class="style11">curr</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">=</span><span class="style11">tempVariable</span><span class="style10">;
+            </span><span class="style2">//if size is 20 display
+            </span><span class="style5">if </span><span class="style10">(</span><span class="style11">size2</span><span class="style10">==</span><span class="style4">20</span><span class="style10">){ </span><span class="style16">cout </span><span class="style10">&lt;&lt; </span><span class="style6">"Swapped " </span><span class="style10">&lt;&lt; </span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">data  </span><span class="style10">&lt;&lt; </span><span class="style6">" with " </span><span class="style10">&lt;&lt; </span><span class="style11">curr</span><span class="style10">-&gt;</span><span class="style11">data </span><span class="style10">&lt;&lt; </span><span class="style6">" ---&gt;"</span><span class="style10">;</span><span class="style11">show</span><span class="style10">(</span><span class="style11">head</span><span class="style10">);}
+              }
+        </span><span class="style11">curr</span><span class="style10">=</span><span class="style11">curr</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+              }
+    </span><span class="style11">temp</span><span class="style10">=</span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+     }
+</span><span class="style11">TOCK</span><span class="style10">();</span><span class="style2">// stop the time.
+</span><span class="style11">sorted</span><span class="style10">=</span><span class="style5">true</span><span class="style10">;
+</span><span class="style5">return </span><span class="style11">DURATION</span><span class="style10">();
+  }
+</span><span class="style2">//merge the two list into one
+</span><span class="style11">ListNode mergeLists</span><span class="style10">(</span><span class="style11">ListNode a</span><span class="style10">, </span><span class="style11">ListNode b</span><span class="style10">)
+{
+  </span><span class="style11">ListNode mergedList </span><span class="style10">= </span><span class="style11">NULL</span><span class="style10">;
+  </span><span class="style2">//base case
+  </span><span class="style5">if </span><span class="style10">(</span><span class="style11">a </span><span class="style10">== </span><span class="style11">NULL</span><span class="style10">)
+     </span><span class="style5">return</span><span class="style10">(</span><span class="style11">b</span><span class="style10">);
+  </span><span class="style5">else if </span><span class="style10">(</span><span class="style11">b</span><span class="style10">==</span><span class="style11">NULL</span><span class="style10">)
+     </span><span class="style5">return</span><span class="style10">(</span><span class="style11">a</span><span class="style10">);
+  </span><span class="style2">// pick either a or b then recall mergeLists
+  </span><span class="style5">if </span><span class="style10">(</span><span class="style11">a</span><span class="style10">-&gt;</span><span class="style11">data </span><span class="style10">&lt;= </span><span class="style11">b</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">)
+  {
+     </span><span class="style11">mergedList </span><span class="style10">= </span><span class="style11">a</span><span class="style10">;
+     </span><span class="style11">mergedList</span><span class="style10">-&gt;</span><span class="style11">next </span><span class="style10">= </span><span class="style11">mergeLists</span><span class="style10">(</span><span class="style11">a</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">, </span><span class="style11">b</span><span class="style10">);
+  }
+  </span><span class="style5">else
+  </span><span class="style10">{
+     </span><span class="style11">mergedList </span><span class="style10">= </span><span class="style11">b</span><span class="style10">;
+     </span><span class="style11">mergedList</span><span class="style10">-&gt;</span><span class="style11">next </span><span class="style10">= </span><span class="style11">mergeLists</span><span class="style10">(</span><span class="style11">a</span><span class="style10">, </span><span class="style11">b</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">);
+  }
+  </span><span class="style5">return</span><span class="style10">(</span><span class="style11">mergedList</span><span class="style10">);
+}
+</span><span class="style2">//partitions the list in to two lists
+</span><span class="style5">void </span><span class="style16">partition</span><span class="style10">(</span><span class="style11">ListNode curHead</span><span class="style10">, </span><span class="style11">ListNode </span><span class="style10">*</span><span class="style11">left</span><span class="style10">, </span><span class="style11">ListNode </span><span class="style10">*</span><span class="style11">right</span><span class="style10">)
+{
+    </span><span class="style11">ListNode fast</span><span class="style10">;
+    </span><span class="style11">ListNode slow</span><span class="style10">;
+    </span><span class="style5">if </span><span class="style10">( </span><span class="style11">curHead </span><span class="style10">==</span><span class="style11">NULL </span><span class="style10">|| </span><span class="style11">curHead</span><span class="style10">-&gt;</span><span class="style11">next </span><span class="style10">==</span><span class="style11">NULL</span><span class="style10">)
+    {
+            *</span><span class="style11">left</span><span class="style10">=</span><span class="style11">curHead</span><span class="style10">;
+            *</span><span class="style11">right</span><span class="style10">= </span><span class="style11">NULL</span><span class="style10">;
+    }
+    </span><span class="style5">else
+    </span><span class="style10">{
+        </span><span class="style11">slow </span><span class="style10">= </span><span class="style11">curHead</span><span class="style10">;
+        </span><span class="style11">fast </span><span class="style10">= </span><span class="style11">curHead</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+        </span><span class="style5">while</span><span class="style10">(</span><span class="style11">fast </span><span class="style10">!= </span><span class="style11">NULL</span><span class="style10">)
+            {
+                </span><span class="style11">fast</span><span class="style10">=</span><span class="style11">fast</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+                </span><span class="style5">if </span><span class="style10">(</span><span class="style11">fast </span><span class="style10">!= </span><span class="style11">NULL</span><span class="style10">)
+                    {
+                        </span><span class="style11">slow</span><span class="style10">= </span><span class="style11">slow</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+                        </span><span class="style11">fast </span><span class="style10">= </span><span class="style11">fast</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+                    }
+            }
+            *</span><span class="style11">left </span><span class="style10">= </span><span class="style11">curHead</span><span class="style10">;
+            *</span><span class="style11">right </span><span class="style10">= </span><span class="style11">slow</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+            </span><span class="style11">slow</span><span class="style10">-&gt;</span><span class="style11">next </span><span class="style10">= </span><span class="style11">NULL</span><span class="style10">;
+        </span><span class="style5">if </span><span class="style10">(</span><span class="style11">size2</span><span class="style10">==</span><span class="style4">20</span><span class="style10">){
+        </span><span class="style16">cout</span><span class="style10">&lt;&lt; </span><span class="style6">"left side"</span><span class="style10">; </span><span class="style11">show</span><span class="style10">(*</span><span class="style11">left</span><span class="style10">);
+        </span><span class="style16">cout</span><span class="style10">&lt;&lt; </span><span class="style6">"right side"</span><span class="style10">;</span><span class="style11">show</span><span class="style10">(*</span><span class="style11">right</span><span class="style10">);
+        }
+    }
+}
+</span><span class="style2">// merge sort Algorithm.
+</span><span class="style5">void </span><span class="style11">mergeSort</span><span class="style10">(</span><span class="style11">ListNode </span><span class="style10">*</span><span class="style11">source</span><span class="style10">)
+{
+     </span><span class="style11">ListNode start </span><span class="style10">= *</span><span class="style11">source</span><span class="style10">;
+     </span><span class="style11">ListNode a</span><span class="style10">=</span><span class="style11">NULL</span><span class="style10">;
+     </span><span class="style11">ListNode b</span><span class="style10">=</span><span class="style11">NULL</span><span class="style10">;
+     </span><span class="style2">//base case
+    </span><span class="style5">if </span><span class="style10">(</span><span class="style11">start</span><span class="style10">==</span><span class="style11">NULL </span><span class="style10">|| </span><span class="style11">start</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">==</span><span class="style11">NULL</span><span class="style10">)
+        {
+            </span><span class="style5">return</span><span class="style10">;
+        }
+    </span><span class="style16">partition</span><span class="style10">(</span><span class="style11">start</span><span class="style10">,&amp;</span><span class="style11">a</span><span class="style10">,&amp;</span><span class="style11">b</span><span class="style10">);
+    </span><span class="style11">mergeSort</span><span class="style10">(&amp;</span><span class="style11">a</span><span class="style10">);
+    </span><span class="style11">mergeSort</span><span class="style10">(&amp;</span><span class="style11">b</span><span class="style10">);
+    </span><span class="style5">if</span><span class="style10">(</span><span class="style11">size2</span><span class="style10">==</span><span class="style4">20</span><span class="style10">) {</span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">"merging the halves\nHalf 1"</span><span class="style10">;</span><span class="style11">show</span><span class="style10">(</span><span class="style11">a</span><span class="style10">);
+    </span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">"Half 2"</span><span class="style10">;</span><span class="style11">show</span><span class="style10">(</span><span class="style11">b</span><span class="style10">);</span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style16">endl</span><span class="style10">;
+    }
+    *</span><span class="style11">source </span><span class="style10">= </span><span class="style11">mergeLists</span><span class="style10">(</span><span class="style11">a</span><span class="style10">,</span><span class="style11">b</span><span class="style10">);
+    </span><span class="style5">if</span><span class="style10">(</span><span class="style11">size2</span><span class="style10">==</span><span class="style4">20</span><span class="style10">){</span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">"After merging .The new"</span><span class="style10">;  </span><span class="style11">show</span><span class="style10">(*</span><span class="style11">source</span><span class="style10">);}
+    </span><span class="style11">sorted</span><span class="style10">=</span><span class="style5">true</span><span class="style10">;
+ }
+};</span><span class="style2">//end of LinkedList structure
+
+//to save the list
+</span><span class="style5">void </span><span class="style11">save</span><span class="style10">(</span><span class="style16">string </span><span class="style11">name</span><span class="style10">,</span><span class="style11">ListNode head</span><span class="style10">){
+   </span><span class="style11">Node</span><span class="style10">* </span><span class="style11">temp </span><span class="style10">=</span><span class="style5">new </span><span class="style11">Node</span><span class="style10">();
+    </span><span class="style11">temp</span><span class="style10">=</span><span class="style11">head</span><span class="style10">;
+</span><span class="style16">ofstream </span><span class="style11">save</span><span class="style10">;
+   </span><span class="style11">save</span><span class="style10">.</span><span class="style11">open</span><span class="style10">(</span><span class="style11">name</span><span class="style10">.</span><span class="style11">c_str</span><span class="style10">(),</span><span class="style11">ios</span><span class="style10">::</span><span class="style11">out</span><span class="style10">);
+   </span><span class="style5">if</span><span class="style10">(</span><span class="style11">save</span><span class="style10">.</span><span class="style11">is_open</span><span class="style10">()){
+</span><span class="style5">while</span><span class="style10">(</span><span class="style11">temp</span><span class="style10">!=</span><span class="style11">NULL</span><span class="style10">){
+  </span><span class="style11">save</span><span class="style10">&lt;&lt;</span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">&lt;&lt;</span><span class="style16">endl</span><span class="style10">;
+   </span><span class="style11">temp</span><span class="style10">=</span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+}
+</span><span class="style11">save</span><span class="style10">.</span><span class="style11">close</span><span class="style10">();
+   }
+}
+</span><span class="style2">//to load the list of size 20
+</span><span class="style5">void </span><span class="style11">load</span><span class="style10">(</span><span class="style16">string </span><span class="style11">name</span><span class="style10">,</span><span class="style11">ListNode </span><span class="style10">*</span><span class="style11">head</span><span class="style10">){
+   </span><span class="style11">Node</span><span class="style10">* </span><span class="style11">temp </span><span class="style10">=</span><span class="style5">new </span><span class="style11">Node</span><span class="style10">();
+    </span><span class="style11">temp</span><span class="style10">=*</span><span class="style11">head</span><span class="style10">;
+    </span><span class="style16">ifstream </span><span class="style11">load</span><span class="style10">;
+     </span><span class="style11">load</span><span class="style10">.</span><span class="style11">open</span><span class="style10">(</span><span class="style11">name</span><span class="style10">.</span><span class="style11">c_str</span><span class="style10">(),</span><span class="style11">ios</span><span class="style10">::</span><span class="style11">in</span><span class="style10">);
+   </span><span class="style5">if</span><span class="style10">(</span><span class="style11">load</span><span class="style10">.</span><span class="style11">is_open</span><span class="style10">()){
+
+</span><span class="style5">while</span><span class="style10">(</span><span class="style11">temp</span><span class="style10">!=</span><span class="style11">NULL</span><span class="style10">){
+</span><span class="style11">load</span><span class="style10">&gt;&gt;</span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">data</span><span class="style10">;
+   </span><span class="style11">temp</span><span class="style10">=</span><span class="style11">temp</span><span class="style10">-&gt;</span><span class="style11">next</span><span class="style10">;
+}
+</span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">"\n\tThe data has been loaded successfully\n"</span><span class="style10">;
+ </span><span class="style11">load</span><span class="style10">.</span><span class="style11">close</span><span class="style10">();
+ }</span><span class="style5">else </span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">"can not load check the file if "</span><span class="style10">&lt;&lt;</span><span class="style11">name</span><span class="style10">&lt;&lt;</span><span class="style6">" excited\n\n"</span><span class="style10">;
+}
+</span><span class="style2">//to display the menu and return the user choice
+</span><span class="style16">string </span><span class="style11">menu</span><span class="style10">(){
+    </span><span class="style16">string </span><span class="style11">choice</span><span class="style10">;
+    </span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style16">endl
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@                                                        @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@                                                        @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@          Please select :                               @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@                                                        @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@          1. Selection sort                             @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@          2. Bubble sort                                @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@          3. Insertion sort                             @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@          4. Merge sort                                 @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@          5. Comparison between sorting Algorithms      @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@          6. Save Records to File                       @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@          7. Load Records from File                     @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@          8. view the linked-list arrays                @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@          9. to reset the list                          @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@                                                        @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@          Q-quit                                        @@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+        </span><span class="style10">&lt;&lt;</span><span class="style6">"@@@@                  =&gt; "</span><span class="style10">;
+        </span><span class="style11">getline</span><span class="style10">(</span><span class="style16">cin</span><span class="style10">,</span><span class="style11">choice</span><span class="style10">);
+    </span><span class="style16">cout </span><span class="style10">&lt;&lt; </span><span class="style16">endl</span><span class="style10">;
+    </span><span class="style5">return </span><span class="style11">choice</span><span class="style10">;
+}
+</span><span class="style5">int </span><span class="style11">main</span><span class="style10">()
+{
+</span><span class="style2">//setting default value
+</span><span class="style11">linked_list list_of_size_20</span><span class="style10">(</span><span class="style4">20</span><span class="style10">);
+</span><span class="style11">linked_list list_of_size_200</span><span class="style10">(</span><span class="style4">200</span><span class="style10">);
+</span><span class="style11">linked_list list_of_size_2000</span><span class="style10">(</span><span class="style4">2000</span><span class="style10">);
+  </span><span class="style5">bool </span><span class="style11">done </span><span class="style10">= </span><span class="style5">false</span><span class="style10">;
+  </span><span class="style16">string </span><span class="style11">choice</span><span class="style10">;
+  </span><span class="style5">double </span><span class="style11">timing</span><span class="style10">[</span><span class="style4">12</span><span class="style10">];
+  </span><span class="style5">for</span><span class="style10">(</span><span class="style5">int </span><span class="style11">i</span><span class="style10">=</span><span class="style4">0</span><span class="style10">;</span><span class="style11">i</span><span class="style10">&lt;</span><span class="style4">12</span><span class="style10">;</span><span class="style11">i</span><span class="style10">++)
+    </span><span class="style11">timing</span><span class="style10">[</span><span class="style11">i</span><span class="style10">]=</span><span class="style4">0</span><span class="style10">;
+  </span><span class="style5">do</span><span class="style10">{
+ </span><span class="style11">choice</span><span class="style10">=</span><span class="style11">menu</span><span class="style10">();
+</span><span class="style5">if</span><span class="style10">(</span><span class="style11">choice</span><span class="style10">==</span><span class="style6">"1"</span><span class="style10">){</span><span class="style2">//
+
+  </span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">20</span><span class="style10">,</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">);
+  </span><span class="style11">timing</span><span class="style10">[</span><span class="style4">0</span><span class="style10">]=</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">selection_Sort_Algorithm</span><span class="style10">();
+
+  </span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">200</span><span class="style10">,</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">);
+  </span><span class="style11">timing</span><span class="style10">[</span><span class="style4">1</span><span class="style10">]= </span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">selection_Sort_Algorithm</span><span class="style10">();
+
+  </span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">2000</span><span class="style10">,</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">);
+  </span><span class="style11">timing</span><span class="style10">[</span><span class="style4">2</span><span class="style10">]=</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">selection_Sort_Algorithm</span><span class="style10">();
+
+  </span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">"\n\nThe time that selection Sort Algorithm took for \n size 20   is "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">0</span><span class="style10">]
+     &lt;&lt;</span><span class="style6">"\n size 200  is "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">1</span><span class="style10">]&lt;&lt;</span><span class="style6">"\n size 2000 is "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">2</span><span class="style10">]&lt;&lt;</span><span class="style6">"\n\n"</span><span class="style10">;
+}
+</span><span class="style5">else if</span><span class="style10">(</span><span class="style11">choice</span><span class="style10">==</span><span class="style6">"2"</span><span class="style10">){
+  </span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">20</span><span class="style10">,</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">);
+  </span><span class="style11">timing</span><span class="style10">[</span><span class="style4">3</span><span class="style10">]=</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">bubble_Sort_Algorithm</span><span class="style10">();
+
+  </span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">200</span><span class="style10">,</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">);
+  </span><span class="style11">timing</span><span class="style10">[</span><span class="style4">4</span><span class="style10">]=</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">bubble_Sort_Algorithm</span><span class="style10">();
+
+  </span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">2000</span><span class="style10">,</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">);
+  </span><span class="style11">timing</span><span class="style10">[</span><span class="style4">5</span><span class="style10">]= </span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">bubble_Sort_Algorithm</span><span class="style10">();
+
+  </span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">"\n\nThe time that selection Sort Algorithm took for \n size 20   is "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">3</span><span class="style10">]
+     &lt;&lt;</span><span class="style6">"\n size 200  is "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">4</span><span class="style10">]&lt;&lt;</span><span class="style6">"\n size 2000 is "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">5</span><span class="style10">]&lt;&lt;</span><span class="style6">"\n\n"</span><span class="style10">;
+}
+</span><span class="style5">else if</span><span class="style10">(</span><span class="style11">choice</span><span class="style10">==</span><span class="style6">"3"</span><span class="style10">){
+  </span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">20</span><span class="style10">,</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">);
+  </span><span class="style11">timing</span><span class="style10">[</span><span class="style4">6</span><span class="style10">]=</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">insertion_Sort_Algorithm</span><span class="style10">();
+
+  </span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">200</span><span class="style10">,</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">);
+  </span><span class="style11">timing</span><span class="style10">[</span><span class="style4">7</span><span class="style10">]=</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">insertion_Sort_Algorithm</span><span class="style10">();
+
+  </span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">2000</span><span class="style10">,</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">);
+  </span><span class="style11">timing</span><span class="style10">[</span><span class="style4">8</span><span class="style10">]=</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">insertion_Sort_Algorithm</span><span class="style10">();
+
+  </span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">"\n\nThe time that selection Sort Algorithm took for \n size 20   is "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">6</span><span class="style10">]
+     &lt;&lt;</span><span class="style6">"\n size 200  is "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">7</span><span class="style10">]&lt;&lt;</span><span class="style6">"\n size 2000 is "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">8</span><span class="style10">]&lt;&lt;</span><span class="style6">"\n\n"</span><span class="style10">;
+}
+</span><span class="style5">else if</span><span class="style10">(</span><span class="style11">choice</span><span class="style10">==</span><span class="style6">"4"</span><span class="style10">){
+  </span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">20</span><span class="style10">,</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">);
+  </span><span class="style11">TICK</span><span class="style10">();
+  </span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">mergeSort</span><span class="style10">(&amp;</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">head</span><span class="style10">);
+  </span><span class="style11">TOCK</span><span class="style10">();
+  </span><span class="style11">timing</span><span class="style10">[</span><span class="style4">9</span><span class="style10">]=</span><span class="style11">DURATION</span><span class="style10">();
+
+  </span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">200</span><span class="style10">,</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">);
+  </span><span class="style11">TICK</span><span class="style10">();
+  </span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">mergeSort</span><span class="style10">(&amp;</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">head</span><span class="style10">);
+  </span><span class="style11">TOCK</span><span class="style10">();
+  </span><span class="style11">timing</span><span class="style10">[</span><span class="style4">10</span><span class="style10">]=</span><span class="style11">DURATION</span><span class="style10">();
+
+  </span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">2000</span><span class="style10">,</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">);
+  </span><span class="style11">TICK</span><span class="style10">();
+  </span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">mergeSort</span><span class="style10">(&amp;</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">head</span><span class="style10">);
+  </span><span class="style11">TOCK</span><span class="style10">();
+  </span><span class="style11">timing</span><span class="style10">[</span><span class="style4">11</span><span class="style10">]=</span><span class="style11">DURATION</span><span class="style10">();
+
+  </span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">"\n\nThe time that selection Sort Algorithm took for \n size 20   is "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">9</span><span class="style10">]
+     &lt;&lt;</span><span class="style6">"\n size 200  is "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">10</span><span class="style10">]&lt;&lt;</span><span class="style6">"\n size 2000 is "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">11</span><span class="style10">]&lt;&lt;</span><span class="style6">"\n\n"</span><span class="style10">;
+ }
+</span><span class="style5">else if</span><span class="style10">(</span><span class="style11">choice</span><span class="style10">==</span><span class="style6">"5"</span><span class="style10">){
+</span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">"-------------------------------------------------------------------------\n"
+    </span><span class="style10">&lt;&lt;</span><span class="style6">"                 comparison of all sorting Algorithms\n"
+    </span><span class="style10">&lt;&lt;</span><span class="style6">"-------------------------------------------------------------------------\n"
+    </span><span class="style10">&lt;&lt;</span><span class="style6">"              |  size 20        |  size 200          |  size 2000        \n"
+    </span><span class="style10">&lt;&lt;</span><span class="style6">"-------------------------------------------------------------------------\n"
+    </span><span class="style10">&lt;&lt;</span><span class="style6">"selection sort| "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">0</span><span class="style10">]&lt;&lt;</span><span class="style6">"       | "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">1</span><span class="style10">]&lt;&lt;</span><span class="style6">"        | "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">2</span><span class="style10">]&lt;&lt;</span><span class="style16">endl
+    </span><span class="style10">&lt;&lt;</span><span class="style6">"-------------------------------------------------------------------------\n"
+    </span><span class="style10">&lt;&lt;</span><span class="style6">"bubble sort   | "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">3</span><span class="style10">]&lt;&lt;</span><span class="style6">"        | "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">4</span><span class="style10">]&lt;&lt;</span><span class="style6">"        | "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">5</span><span class="style10">]&lt;&lt;</span><span class="style16">endl
+    </span><span class="style10">&lt;&lt;</span><span class="style6">"-------------------------------------------------------------------------\n"
+    </span><span class="style10">&lt;&lt;</span><span class="style6">"insertion sort| "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">6</span><span class="style10">]&lt;&lt;</span><span class="style6">"       | "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">7</span><span class="style10">]&lt;&lt;</span><span class="style6">"        | "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">8</span><span class="style10">]&lt;&lt;</span><span class="style16">endl
+    </span><span class="style10">&lt;&lt;</span><span class="style6">"-------------------------------------------------------------------------\n"
+    </span><span class="style10">&lt;&lt;</span><span class="style6">"merge sort    | "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">9</span><span class="style10">]&lt;&lt;</span><span class="style6">"       | "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">10</span><span class="style10">]&lt;&lt;</span><span class="style6">"        | "</span><span class="style10">&lt;&lt;</span><span class="style11">timing</span><span class="style10">[</span><span class="style4">11</span><span class="style10">]&lt;&lt;</span><span class="style16">endl
+    </span><span class="style10">&lt;&lt;</span><span class="style6">"-------------------------------------------------------------------------\n"</span><span class="style10">;
+}
+</span><span class="style5">else if</span><span class="style10">(</span><span class="style11">choice</span><span class="style10">==</span><span class="style6">"6"</span><span class="style10">){
+</span><span class="style2">//for option 6 saving all the lists
+</span><span class="style11">save</span><span class="style10">(</span><span class="style6">"list_of_size_20"</span><span class="style10">,</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">head</span><span class="style10">);
+</span><span class="style11">save</span><span class="style10">(</span><span class="style6">"list_of_size_200"</span><span class="style10">,</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">head</span><span class="style10">);
+</span><span class="style11">save</span><span class="style10">(</span><span class="style6">"list_of_size_2000"</span><span class="style10">,</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">head</span><span class="style10">);
+</span><span class="style16">cout </span><span class="style10">&lt;&lt;</span><span class="style6">"The data has been saved successfully\n"</span><span class="style10">;
+}
+</span><span class="style5">else if</span><span class="style10">(</span><span class="style11">choice</span><span class="style10">==</span><span class="style6">"7"</span><span class="style10">){
+</span><span class="style2">//for option 7 loading all the lists
+</span><span class="style11">load</span><span class="style10">(</span><span class="style6">"list_of_size_20"</span><span class="style10">,&amp;</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">head</span><span class="style10">);
+</span><span class="style11">load</span><span class="style10">(</span><span class="style6">"list_of_size_200"</span><span class="style10">,&amp;</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">head</span><span class="style10">);
+</span><span class="style11">load</span><span class="style10">(</span><span class="style6">"list_of_size_2000"</span><span class="style10">,&amp;</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">head</span><span class="style10">);
+}
+</span><span class="style5">else if</span><span class="style10">(</span><span class="style11">choice</span><span class="style10">==</span><span class="style6">"8"</span><span class="style10">){
+</span><span class="style2">//for option 8 display linked-list arrays
+</span><span class="style16">cout</span><span class="style10">&lt;&lt; </span><span class="style6">"size 2000 " </span><span class="style10">;</span><span class="style11">show</span><span class="style10">(</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">head</span><span class="style10">);
+</span><span class="style16">cout</span><span class="style10">&lt;&lt; </span><span class="style6">"size 200 " </span><span class="style10">;</span><span class="style11">show</span><span class="style10">(</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">head</span><span class="style10">);
+</span><span class="style16">cout</span><span class="style10">&lt;&lt; </span><span class="style6">"size 20" </span><span class="style10">;</span><span class="style11">show</span><span class="style10">(</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">head</span><span class="style10">);
+}
+</span><span class="style5">else if</span><span class="style10">(</span><span class="style11">choice</span><span class="style10">==</span><span class="style6">"9"</span><span class="style10">){
+</span><span class="style2">//for option 9 resets linked-list arrays
+</span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">20</span><span class="style10">,</span><span class="style5">true</span><span class="style10">);</span><span class="style11">list_of_size_20</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">=</span><span class="style5">false</span><span class="style10">;
+</span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">200</span><span class="style10">,</span><span class="style5">true</span><span class="style10">);</span><span class="style11">list_of_size_200</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">=</span><span class="style5">false</span><span class="style10">;
+</span><span class="style11">createList</span><span class="style10">(&amp;</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">head</span><span class="style10">,</span><span class="style4">2000</span><span class="style10">,</span><span class="style5">true</span><span class="style10">);</span><span class="style11">list_of_size_2000</span><span class="style10">.</span><span class="style11">sorted</span><span class="style10">=</span><span class="style5">false</span><span class="style10">;
+
+  </span><span class="style5">for</span><span class="style10">(</span><span class="style5">int </span><span class="style11">i</span><span class="style10">=</span><span class="style4">0</span><span class="style10">;</span><span class="style11">i</span><span class="style10">&lt;</span><span class="style4">12</span><span class="style10">;</span><span class="style11">i</span><span class="style10">++)
+    </span><span class="style11">timing</span><span class="style10">[</span><span class="style11">i</span><span class="style10">]=</span><span class="style4">0</span><span class="style10">;
+  </span><span class="style16">cout</span><span class="style10">&lt;&lt;</span><span class="style6">"the list have been reset \n"</span><span class="style10">;
+}
+</span><span class="style5">else if</span><span class="style10">(</span><span class="style11">choice</span><span class="style10">==</span><span class="style6">"q"</span><span class="style10">||</span><span class="style11">choice</span><span class="style10">==</span><span class="style6">"Q"</span><span class="style10">)</span><span class="style11">done </span><span class="style10">=</span><span class="style5">true</span><span class="style10">;
+</span><span class="style5">else  </span><span class="style10">{</span><span class="style16">cout </span><span class="style10">&lt;&lt; </span><span class="style6">"Invalid choice" </span><span class="style10">&lt;&lt; </span><span class="style16">endl</span><span class="style10">;}
+
+} </span><span class="style5">while </span><span class="style10">( !</span><span class="style11">done </span><span class="style10">);
+  </span><span class="style16">cout </span><span class="style10">&lt;&lt; </span><span class="style6">"Good Bye !!" </span><span class="style10">&lt;&lt; </span><span class="style16">endl</span><span class="style10">;
+    </span><span class="style5">return </span><span class="style4">0</span><span class="style10">;
+}</span></span>
+</code></pre>
+</body>
+</html>
